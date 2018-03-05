@@ -34,7 +34,8 @@
             @Html.DisplayFor(modelItem => article.Title)
         </td>
         <td>
-            <img style="height: 50px;width: 50px" src="@article.ImageUrl"/>
+            @Html.Raw("<img style='width:50px; height:50px;' src=\"data:image/jpeg;base64," 
+                      + Convert.ToBase64String(article.Image) + "\" />")
         </td>
         <td>
             @Html.DisplayFor(modelItem => article.DateCreated)

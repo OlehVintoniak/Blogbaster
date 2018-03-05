@@ -15,7 +15,8 @@
         </dt>
 
         <dd>
-            <img style="height: 200px; width: 200px;" src="@Model.ImageUrl"/>
+            @Html.Raw("<img style='width:200px; height:200px;' src=\"data:image/jpeg;base64,"
+                   + Convert.ToBase64String(Model.Image) + "\" />")
         </dd>
 
         <dt>

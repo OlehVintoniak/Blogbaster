@@ -13,7 +13,7 @@ namespace GundiakProject.DomainModels
         public string Text { get; set; }
         public Status Status { get; set; }
         public DateTime DateCreated { get; set; }
-        public string ImageUrl { get; set; }
+        public byte[] Image { get; set; }
         public DateTime? DatePublished { get; set; }
 
 

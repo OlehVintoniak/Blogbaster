@@ -4,8 +4,10 @@ using System;
 using GundiakProject.DomainModels;
 using GundiakProject.Models;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using GundiakProject.Enums;
@@ -67,7 +69,23 @@ namespace GundiakProject.Controllers
             {
                 article.DateCreated = DateTime.Now;
                 article.ApplicationUserId = User.Identity.GetUserId();
-                article.ImageUrl = ImageHelper.UploadImg(Request.Files[0]);
+
+                #region SetImage
+                if (Request.Files[0] != null)
+                {
+                    byte[] imageData = null;
+                    using (var binaryReader = new BinaryReader(Request.Files[0].InputStream))
+                    {
+                        imageData = binaryReader.ReadBytes(Request.Files[0].ContentLength);
+                    }
+                    article.Image = imageData;
+                }
+                if (article.Image.Length == 0)
+                {
+                    article.Image = ImageHelper.GetDefaultArticleImage();
+                }
+                #endregion
+
                 db.Articles.Add(article);
                 await db.SaveChangesAsync();
                 return RedirectToRoute(new {controller="Home", action="Index" });
@@ -130,7 +148,6 @@ namespace GundiakProject.Controllers
         {
             Article article = await db.Articles.FindAsync(id);
             db.Articles.Remove(article);
-            ImageHelper.DeleteImg(article.ImageUrl);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
