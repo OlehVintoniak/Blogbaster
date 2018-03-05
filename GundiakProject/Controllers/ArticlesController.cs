@@ -1,13 +1,18 @@
-﻿using System;
+﻿#region
+
+using System;
 using GundiakProject.DomainModels;
 using GundiakProject.Models;
 using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using GundiakProject.Enums;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+
+#endregion
 
 namespace GundiakProject.Controllers
 {
@@ -21,6 +26,7 @@ namespace GundiakProject.Controllers
             _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
+        #region Get
         // GET: Articles
         public async Task<ActionResult> Index()
         {
@@ -42,7 +48,9 @@ namespace GundiakProject.Controllers
             }
             return View(article);
         }
+        #endregion
 
+        #region Create
         // GET: Articles/Create
         public ActionResult Create()
         {
@@ -50,8 +58,6 @@ namespace GundiakProject.Controllers
         }
 
         // POST: Articles/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Article article)
@@ -64,44 +70,42 @@ namespace GundiakProject.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToRoute(new {controller="Home", action="Index" });
             }
-           
-            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email", article.ApplicationUserId);
             return View(article);
         }
+        #endregion
 
-        // GET: Articles/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Article article = await db.Articles.FindAsync(id);
-            if (article == null)
-            {
-                return HttpNotFound();
-            }
-            //ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email", article.ApplicationUserId);
-            return View(article);
-        }
+        #region Update (not implemented)
+        //// GET: Articles/Edit/5
+        //public async Task<ActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Article article = await db.Articles.FindAsync(id);
+        //    if (article == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(article);
+        //}
 
-        // POST: Articles/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Text,Status,ApplicationUserId")] Article article)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(article).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-           // ViewBag.ApplicationUserId = new SelectList(db.ApplicationUsers, "Id", "Email", article.ApplicationUserId);
-            return View(article);
-        }
+        //// POST: Articles/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Text,Status,ApplicationUserId")] Article article)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(article).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(article);
+        //}
+        #endregion
 
+        #region Delete
         // GET: Articles/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
@@ -127,6 +131,16 @@ namespace GundiakProject.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+        #endregion
+
+        public ActionResult ArticlesPage()
+        {
+            var articles = db.Articles
+                .Where(a => a.Status == Status.Published)
+                .OrderBy( a => a.DatePublished)
+                .ToList();
+            return View(articles);
+        }
 
         [HttpPost]
         public async Task<JsonResult> Publish(int articleId)
@@ -137,10 +151,26 @@ namespace GundiakProject.Controllers
                 return Json("article not found");
             }
 
-            ChangeStatus(ref article);
+            var result = ChangeStatus(ref article);
             await db.SaveChangesAsync();
 
-            return Json("success");
+            return Json(result);
+        }
+
+        #region Helpers
+        private string ChangeStatus(ref Article article)
+        {
+            if (article.Status == Status.Created)
+            {
+                article.Status = Status.Published;
+                article.DatePublished = DateTime.Now;
+                return "Published";
+            }
+            else
+            {
+                article.Status = Status.Created;
+                return "Created";
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -151,17 +181,6 @@ namespace GundiakProject.Controllers
             }
             base.Dispose(disposing);
         }
-
-        private void ChangeStatus(ref Article article)
-        {
-            if (article.Status == Status.Created)
-            {
-                article.Status = Status.Published;
-            }
-            else
-            {
-                article.Status = Status.Created;
-            }
-        }
+        #endregion
     }
 }

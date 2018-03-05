@@ -1,7 +1,9 @@
-﻿using System.Linq;
-using System.Web.Mvc;
-using GundiakProject.Enums;
+﻿#region
+
 using GundiakProject.Models;
+using System.Web.Mvc;
+
+#endregion
 
 namespace GundiakProject.Controllers
 {
@@ -10,9 +12,6 @@ namespace GundiakProject.Controllers
         private readonly ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            ViewBag.Articles = db.Articles
-                .OrderBy(a => a.DateCreated)
-                .Where(s => s.Status == Status.Published);
             return View();
         }
 
@@ -27,11 +26,6 @@ namespace GundiakProject.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
-
-        public ActionResult General()
-        {
             return View();
         }
     }
