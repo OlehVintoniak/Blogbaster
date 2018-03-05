@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using GundiakProject.Enums;
+using GundiakProject.Helpers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -66,6 +67,7 @@ namespace GundiakProject.Controllers
             {
                 article.DateCreated = DateTime.Now;
                 article.ApplicationUserId = User.Identity.GetUserId();
+                article.ImageUrl = ImageHelper.UploadImg(Request.Files[0]);
                 db.Articles.Add(article);
                 await db.SaveChangesAsync();
                 return RedirectToRoute(new {controller="Home", action="Index" });
@@ -128,6 +130,7 @@ namespace GundiakProject.Controllers
         {
             Article article = await db.Articles.FindAsync(id);
             db.Articles.Remove(article);
+            ImageHelper.DeleteImg(article.ImageUrl);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -137,7 +140,7 @@ namespace GundiakProject.Controllers
         {
             var articles = db.Articles
                 .Where(a => a.Status == Status.Published)
-                .OrderBy( a => a.DatePublished)
+                .OrderByDescending( a => a.DatePublished)
                 .ToList();
             return View(articles);
         }

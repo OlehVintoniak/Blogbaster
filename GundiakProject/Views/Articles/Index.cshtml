@@ -14,6 +14,9 @@
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
+            <span>Image</span>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.DateCreated)
         </th>
         <th>
@@ -29,6 +32,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => article.Title)
+        </td>
+        <td>
+            <img style="height: 50px;width: 50px" src="@article.ImageUrl"/>
         </td>
         <td>
             @Html.DisplayFor(modelItem => article.DateCreated)

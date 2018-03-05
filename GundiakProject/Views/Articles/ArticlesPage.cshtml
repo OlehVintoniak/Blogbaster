@@ -7,8 +7,15 @@
 @foreach (var atricle in Model)
 {
     <div class="jumbotron">
-        <h1>@atricle.Title</h1>
-        <p class="lead">@atricle.Text</p>
-        <p>@atricle.DatePublished</p>
+        <div class="row">
+            <div class="col-md-3">
+                <img src="@atricle.ImageUrl" style="width: 200px; height: 200px" />
+            </div>
+            <div class="col-md-9">
+                <h1>@atricle.Title</h1>
+                <p class="lead">@atricle.Text</p>
+                <p>@atricle.DatePublished</p>
+            </div>
+        </div>
     </div>
 }
