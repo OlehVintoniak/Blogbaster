@@ -137,6 +137,7 @@ namespace GundiakProject.Controllers
         {
             var articles = db.Articles
                 .Where(a => a.Status == Status.Published)
+                .OrderBy( a => a.DatePublished)
                 .ToList();
             return View(articles);
         }
@@ -150,22 +151,25 @@ namespace GundiakProject.Controllers
                 return Json("article not found");
             }
 
-            ChangeStatus(ref article);
+            var result = ChangeStatus(ref article);
             await db.SaveChangesAsync();
 
-            return Json("success");
+            return Json(result);
         }
 
         #region Helpers
-        private void ChangeStatus(ref Article article)
+        private string ChangeStatus(ref Article article)
         {
             if (article.Status == Status.Created)
             {
                 article.Status = Status.Published;
+                article.DatePublished = DateTime.Now;
+                return "Published";
             }
             else
             {
                 article.Status = Status.Created;
+                return "Created";
             }
         }
 

@@ -34,7 +34,7 @@
             @Html.DisplayFor(modelItem => article.DateCreated)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => article.Status)
+            <span id="@article.Id"> "@article.Status" </span>
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id=article.Id }, new {@class="btn btn-primary"}) 
@@ -69,7 +69,7 @@
                 },
                 dataType: 'html',
                 success: function (data) {
-                    location.reload();
+                    $("#" + articleId).text(data);
                 }
             });
         }
