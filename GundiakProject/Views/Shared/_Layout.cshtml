@@ -37,12 +37,12 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="wrapper container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+    </div>
+    <hr/>
+    <div class="footer container">
+        <p>Copyright (c) 2008</p>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
