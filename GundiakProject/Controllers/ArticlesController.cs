@@ -147,6 +147,13 @@ namespace GundiakProject.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Article article = await db.Articles.FindAsync(id);
+
+            #region EmailNotification
+            if(article != null)
+                await EmailHelper.SendEmail(article.ApplicationUser.Email, "Sorry!",
+                    $"Your article {article.Title} was deleted!");
+            #endregion
+
             db.Articles.Remove(article);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -171,6 +178,16 @@ namespace GundiakProject.Controllers
                 return Json("article not found");
             }
 
+            #region EmailNotification
+
+            if (!article.WasPublished)
+            {
+                await EmailHelper.SendEmail(article.ApplicationUser.Email, "Congratulation!",
+                    $"Your article {article.Title} was succesfuly published!");
+            }
+
+            #endregion
+
             var result = ChangeStatus(ref article);
             await db.SaveChangesAsync();
 
@@ -182,6 +199,9 @@ namespace GundiakProject.Controllers
         {
             if (article.Status == Status.Created)
             {
+                if (!article.WasPublished)
+                    article.WasPublished = true;
+
                 article.Status = Status.Published;
                 article.DatePublished = DateTime.Now;
                 return "Published";

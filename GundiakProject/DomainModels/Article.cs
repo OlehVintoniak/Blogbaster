@@ -15,6 +15,7 @@ namespace GundiakProject.DomainModels
         public DateTime DateCreated { get; set; }
         public byte[] Image { get; set; }
         public DateTime? DatePublished { get; set; }
+        public bool WasPublished { get; set; }
 
 
         public string ApplicationUserId { get; set; }
