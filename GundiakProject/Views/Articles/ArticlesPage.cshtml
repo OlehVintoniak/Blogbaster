@@ -7,16 +7,16 @@
 @foreach (var atricle in Model)
 {
     <a href="/Articles/Details/@atricle.Id">
-        <div class="jumbotron">
+        <div class="jumbotron article">
             <div class="row">
                 <div class="col-md-3">
                     @Html.Raw("<img style='width:200px; height:200px;' src=\"data:image/jpeg;base64,"
                                    + Convert.ToBase64String(atricle.Image) + "\" />")
+                    <span>Pblished: @atricle.DatePublished</span>
                 </div>
                 <div class="col-md-9">
                     <h1>@atricle.Title</h1>
                     <p class="lead">@atricle.Text</p>
-                    <p>@atricle.DatePublished</p>
                 </div>
             </div>
         </div>
