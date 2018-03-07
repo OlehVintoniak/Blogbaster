@@ -12,7 +12,7 @@ namespace GundiakProject.Controllers
         private readonly ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            return View();
+            return View("Landing");
         }
 
         public ActionResult About()

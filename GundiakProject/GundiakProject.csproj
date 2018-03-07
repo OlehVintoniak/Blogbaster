@@ -226,9 +226,11 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CreateArticle.css" />
     <Content Include="Content\Images\Default\default_photos_Article250.png" />
     <Content Include="Content\Images\General\bg1.png" />
     <Content Include="Content\Images\General\bg2.png" />
+    <Content Include="Content\Landing.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -293,6 +295,8 @@
     <Content Include="Views\Articles\Index.cshtml" />
     <Content Include="Views\Articles\ArticlesPage.cshtml" />
     <Content Include="Views\Articles\_ArticlesList.cshtml" />
+    <Content Include="Views\Shared\Landing.cshtml" />
+    <Content Include="Views\Shared\CreateArticle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

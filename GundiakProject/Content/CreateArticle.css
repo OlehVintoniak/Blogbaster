@@ -1,0 +1,23 @@
+﻿body {
+    background: url('Images/General/bg2.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 15%;
+    margin-left: 40px;
+}
+
+    .main.content {
+        border: 1px solid black;
+        width: 300px;
+        height: 200px;
+    }

@@ -60,7 +60,7 @@ namespace GundiakProject.Controllers
         // GET: Articles/Create
         public ActionResult Create()
         {
-            return View();
+            return View("CreateArticle");
         }
 
         // POST: Articles/Create
@@ -91,9 +91,9 @@ namespace GundiakProject.Controllers
 
                 db.Articles.Add(article);
                 await db.SaveChangesAsync();
-                return RedirectToRoute(new {controller="Home", action="Index" });
+                return RedirectToRoute(new {controller="Articles", action="ArticlesPage" });
             }
-            return View(article);
+            return View("CreateArticle",article);
         }
         #endregion
 

@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Landing</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Landing.css" rel="stylesheet" />
+</head>
+<body>
+    <section>
+        <div class="main">
+            <div class="content">
+                @if (Request.IsAuthenticated)
+                {
+                    <p>@Html.ActionLink("Створити оголошення", "Create", "Articles", null, new { @class = "button1 temp" })</p>
+                }
+                else
+                {
+                    <p>@Html.ActionLink("Створити оголошення", "Login", "Account", null, new { @class = "button1 temp" })</p>
+                }
+                <p>@Html.ActionLink("Переглянути оголошення", "ArticlesPage", "Articles", null, new { @class = "button1" })</p>
+            </div>
+        </div>
+    </section>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/common.js"></script>
+</body>
+</html>
