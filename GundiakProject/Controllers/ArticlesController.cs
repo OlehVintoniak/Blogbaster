@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using GundiakProject.DomainModels;
 using GundiakProject.Models;
 using System.Data.Entity;
@@ -9,7 +10,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using Antlr.Runtime;
 using GundiakProject.Enums;
 using GundiakProject.Helpers;
 using Microsoft.AspNet.Identity;
@@ -162,11 +165,24 @@ namespace GundiakProject.Controllers
 
         public ActionResult ArticlesPage()
         {
+            return View();
+        }
+
+        public ActionResult Articles(int pageIndex, int pageSize)
+        {
             var articles = db.Articles
                 .Where(a => a.Status == Status.Published)
-                .OrderByDescending( a => a.DatePublished)
+                .OrderByDescending(a => a.DatePublished).AsQueryable()
+                .Skip(pageIndex * pageSize)
+                .Take(pageSize)
                 .ToList();
-            return View(articles);
+
+            return PartialView("_ArticlesList", articles);
+        }
+        public JsonResult ActiclesCount()
+        {
+            var count = db.Articles.Count(a => a.Status == Status.Published);
+            return Json(count, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

@@ -24,14 +24,12 @@
                     <li>@Html.ActionLink("Articles", "ArticlesPage", "Articles")</li>
                     @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Create article","Create","Articles")</li>
-                         if (User.IsInRole("Admin"))
-                         {
-                             <li>@Html.ActionLink("Publish", "Index", "Articles")</li>
-                         }
+                        <li>@Html.ActionLink("Create article", "Create", "Articles")</li>
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li>@Html.ActionLink("Publish", "Index", "Articles")</li>
+                        }
                     }
-                    
-
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -43,6 +41,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/common.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

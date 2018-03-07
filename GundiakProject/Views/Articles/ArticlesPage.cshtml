@@ -1,24 +1,76 @@
-﻿@model IEnumerable<GundiakProject.DomainModels.Article>
-
-@{
+﻿@{
     ViewBag.Title = "ArticlesPage";
 }
+<div class="articles-container">
 
-@foreach (var atricle in Model)
-{
-    <a href="/Articles/Details/@atricle.Id">
-        <div class="jumbotron article">
-            <div class="row">
-                <div class="col-md-3">
-                    @Html.Raw("<img style='width:200px; height:200px;' src=\"data:image/jpeg;base64,"
-                                   + Convert.ToBase64String(atricle.Image) + "\" />")
-                    <span>Pblished: @atricle.DatePublished</span>
-                </div>
-                <div class="col-md-9">
-                    <h1>@atricle.Title</h1>
-                    <p class="lead">@atricle.Text</p>
-                </div>
-            </div>
-        </div>
-    </a>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function() {
+
+            var pageNum = 0;
+            var enablePagin = true;
+            var allArticlesCount = 0;
+            var pageSize = parseInt("@Constants.ArticlesPageSize");
+
+            articlesCount();
+            articlePagination();
+
+            function articlePagination() {
+                if ($(window).data('ajaxready') === false)
+                    return;
+                if (enablePagin) {
+                    $(window).data('ajaxready', false);
+                    $.ajax({
+                        url: '@Url.Action("Articles", "Articles")',
+                        data: {
+                            pageIndex: pageNum,
+                            pageSize: pageSize
+                        },
+                        dataType: "html",
+                        type: "Get",
+                        success: function(data) {
+                            pageNum++;
+                            $(".articles-container").append(data);
+
+                            var afterLoad = $(".articles-container div[data-append='true']").length;
+                            if (afterLoad == allArticlesCount) {
+                                enablePagin = false;
+                            };
+
+                            $(window).data('ajaxready', true);
+                            if ($(window).height() >
+                                $(".articles-container").height() + $(".articles-container").offset().top) {
+                                articlePagination();
+                            }
+                        }
+                    });
+                }
+            }
+
+            function articlesCount() {
+                if ($(window).data('ajaxready') === false)
+                    return;
+                $.ajax({
+                    url: '@Url.Action("ActiclesCount", "Articles")',
+                    dataType: "html",
+                    type: "Get",
+                    success: function(data) {
+                        allArticlesCount = data;
+                        $(window).data('ajaxready', true);
+                    }
+                });
+            }
+
+            $(window).on("scroll",
+                function() {
+                    delay(function() {
+                            articlePagination();
+                        },
+                        90);
+                });
+
+        });
+    </script>
 }
