@@ -227,6 +227,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\Default\default_photos_Article250.png" />
+    <Content Include="Content\Images\General\bg1.png" />
+    <Content Include="Content\Images\General\bg2.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
