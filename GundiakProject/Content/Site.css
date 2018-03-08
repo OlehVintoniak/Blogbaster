@@ -1,6 +1,9 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    background: url('Images/General/bg3.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -24,5 +27,7 @@ textarea {
 }
 
 .article {
+    opacity: 0.93;
+    margin-top: 40px;
     overflow-x: hidden;
 }

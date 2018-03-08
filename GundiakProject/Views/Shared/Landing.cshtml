@@ -1,4 +1,5 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
+
 @{
     Layout = null;
 }
@@ -25,6 +26,19 @@
                     <p>@Html.ActionLink("Створити оголошення", "Login", "Account", null, new { @class = "button1 temp" })</p>
                 }
                 <p>@Html.ActionLink("Переглянути оголошення", "ArticlesPage", "Articles", null, new { @class = "button1" })</p>
+                @if (!Request.IsAuthenticated)
+                {
+                    <p>@Html.ActionLink("Ввійти", "Login", "Account", null, new { @class = "button1 temp2" })</p>
+                }
+                else
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <a href="javascript:document.getElementById('logoutForm').submit()" class="button1 temp2">Вийти</a>
+                    }
+                }
             </div>
         </div>
     </section>
