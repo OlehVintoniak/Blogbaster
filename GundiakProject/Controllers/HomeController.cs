@@ -28,5 +28,11 @@ namespace GundiakProject.Controllers
 
             return View();
         }
+
+        public ActionResult Forbidden403()
+        {
+            Response.StatusCode = 403;
+            return View("Error403");
+        }
     }
 }

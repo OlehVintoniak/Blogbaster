@@ -48,12 +48,12 @@ namespace GundiakProject.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідно ввести Email")]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідно ввести пароль")]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
@@ -64,12 +64,12 @@ namespace GundiakProject.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідно ввести Email")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідно ввести пароль")]
         [StringLength(100, ErrorMessage = "{0} повинен містити як мінімум {2} символи.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]

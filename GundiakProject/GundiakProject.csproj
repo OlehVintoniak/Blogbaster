@@ -207,6 +207,7 @@
     <Compile Include="DomainModels\Abstract\BaseEntity.cs" />
     <Compile Include="DomainModels\Article.cs" />
     <Compile Include="Enums\Status.cs" />
+    <Compile Include="Filters\OnlyForAdminAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -299,6 +300,7 @@
     <Content Include="Views\Shared\Landing.cshtml" />
     <Content Include="Views\Shared\CreateArticle.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
+    <Content Include="Views\Shared\Error403.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

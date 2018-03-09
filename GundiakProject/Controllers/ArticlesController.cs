@@ -14,6 +14,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using Antlr.Runtime;
 using GundiakProject.Enums;
+using GundiakProject.Filters;
 using GundiakProject.Helpers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -34,6 +35,7 @@ namespace GundiakProject.Controllers
 
         #region Get
         // GET: Articles
+        [OnlyForAdmin]
         public async Task<ActionResult> Index()
         {
             var articles = db.Articles.Include(a => a.ApplicationUser);
@@ -130,6 +132,7 @@ namespace GundiakProject.Controllers
 
         #region Delete
         // GET: Articles/Delete/5
+        [OnlyForAdmin]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -145,6 +148,7 @@ namespace GundiakProject.Controllers
         }
 
         // POST: Articles/Delete/5
+        [OnlyForAdmin]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
@@ -186,6 +190,7 @@ namespace GundiakProject.Controllers
         }
 
         [HttpPost]
+        [OnlyForAdmin]
         public async Task<JsonResult> Publish(int articleId)
         {
             var article = await db.Articles.FirstOrDefaultAsync(a => a.Id == articleId);

@@ -6,6 +6,9 @@
     -o-background-size: cover;
 }
 
+a:active {
+    text-decoration: none;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -28,6 +31,16 @@ textarea {
 
 .article {
     opacity: 0.93;
+    box-shadow: 5px 5px 10px #888888;
     margin-top: 40px;
     overflow-x: hidden;
+}
+
+.hovered-article:hover {
+    box-shadow: 5px 10px 18px #888888;
+}
+
+hr .articlehr {
+    height: 2px;
+    color: black;
 }
