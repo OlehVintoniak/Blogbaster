@@ -1,55 +1,48 @@
-﻿@model GundiakProject.DomainModels.Article
+﻿@using GundiakProject.Enums
+@model GundiakProject.DomainModels.Article
 
 @{
     ViewBag.Title = Model.Title;
 }
 @Html.Partial("_MenuPartial")
-<h2>Details</h2>
 
-<div>
-    <h4>Article</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            <span>Image</span>
-        </dt>
-
-        <dd>
-            @Html.Raw("<img style='width:200px; height:200px;' src=\"data:image/jpeg;base64,"
-                   + Convert.ToBase64String(Model.Image) + "\" />")
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Text)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Text)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-    </dl>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 hidden-sm hidden-xs">
+            <div class="jumbotron article" style="padding: 10px">
+                @Html.Raw("<img style='width:230px; height:230px; margin-left: 2px;' src=\"data:image/jpeg;base64,"
+                          + Convert.ToBase64String(Model.Image) + "\" />")
+            </div>
+            @if (Model.ApplicationUser.Articles.Where(a => a.Status == Status.Published && a.Id != Model.Id).ToList().Count > 0)
+            {
+                <div class="jumbotron article" style="padding: 10px">
+                
+                    <p class="text-center">Інші роботи автора : </p>
+                    <ul>
+                        @foreach (var article in Model.ApplicationUser.Articles.Where(a => a.Status == Status.Published && a.Id != Model.Id))
+                        {
+                            <li>
+                                @if (article.Title.Length > 12)
+                                {
+                                    @Html.ActionLink(article.Title.Substring(0, 12) + "...", "Details", "Articles", new {id = article.Id}, new {@class = "btn-link"})
+                                }
+                                else
+                                {
+                                    @Html.ActionLink(article.Title, "Details", "Articles", new {id = article.Id}, new {@class = "btn-link"})
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+        <div class="col-md-9">
+            <div class="jumbotron article">
+                <h2 style="margin-top: 0;">@Model.Title</h2>
+                <p class="lead">Автор - @Model.ApplicationUser.UserName</p>
+                <hr class="articlehr" />
+                <p class="lead">@Model.Text</p>
+            </div>
+        </div>
+    </div>
 </div>

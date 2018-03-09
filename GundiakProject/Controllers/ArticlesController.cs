@@ -46,14 +46,12 @@ namespace GundiakProject.Controllers
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             Article article = await db.Articles.FindAsync(id);
+
             if (article == null)
-            {
                 return HttpNotFound();
-            }
             return View(article);
         }
         #endregion
