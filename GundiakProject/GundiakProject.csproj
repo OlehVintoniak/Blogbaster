@@ -233,6 +233,13 @@
     <Content Include="Content\Images\General\bg2.png" />
     <Content Include="Content\Images\General\bg3.jpg" />
     <Content Include="Content\Images\General\logo.png" />
+    <Content Include="Content\Images\Image-icons\fb.png" />
+    <Content Include="Content\Images\Image-icons\git.png" />
+    <Content Include="Content\Images\Image-icons\in.png" />
+    <Content Include="Content\Images\Image-icons\tg.png" />
+    <Content Include="Content\Images\Image-icons\vk.png" />
+    <Content Include="Content\Images\People\Gundiak.jpg" />
+    <Content Include="Content\Images\People\Semkiv.png" />
     <Content Include="Content\Landing.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
