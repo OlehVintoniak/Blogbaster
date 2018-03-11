@@ -7,12 +7,11 @@
 }
 
 .main {
-    display: flex;
-    justify-content: center;
-    align-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 21%;
+    position: absolute;
+    top: 50%;
+    margin-top: -75px;
+    left: 50%;
+    margin-left: -180px;
 }
 .main.content {
     border: 1px solid black;
