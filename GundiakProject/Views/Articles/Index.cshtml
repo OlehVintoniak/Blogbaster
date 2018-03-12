@@ -9,13 +9,13 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+                <span>Автор</span>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                <span>Image</span>
+                <span>Зображення</span>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DateCreated)
@@ -46,8 +46,8 @@
                     <span id="@article.Id"> "@article.Status" </span>
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = article.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Delete", "Delete", new { id = article.Id }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Деталі", "Details", new { id = article.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Видалити", "Delete", new { id = article.Id }, new { @class = "btn btn-danger" })
                     @if (article.Status == Status.Published)
                     {
                         <input type="checkbox" class="publish" checked id="@article.Id" />

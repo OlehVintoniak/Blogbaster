@@ -65,7 +65,7 @@ namespace GundiakProject.Models
     public class RegisterViewModel
     {
         [Required(ErrorMessage = "Необхідно ввести Email")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Необхідно ввести коректний Email")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

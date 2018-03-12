@@ -14,6 +14,7 @@ namespace GundiakProject.DomainModels
         public string Title { get; set; }
         [DisplayName("Текст")]
         public string Text { get; set; }
+        [DisplayName("Статус")]
         public Status Status { get; set; }
         [DisplayName("Дата створення")]
         public DateTime DateCreated { get; set; }

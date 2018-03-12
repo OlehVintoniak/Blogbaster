@@ -4,11 +4,11 @@
     ViewBag.Title = "Видалити";
 }
 @Html.Partial("_MenuPartial")
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<br/>
+<br/>
+<br/>
+<h3>Впевнені що хочете видалити?</h3>
 <div>
-    <h4>Article</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -50,8 +50,8 @@
         @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+        <input type="submit" value="Видалити" class="btn btn-danger" />
+        @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-default" })
     </div>
     }
     
