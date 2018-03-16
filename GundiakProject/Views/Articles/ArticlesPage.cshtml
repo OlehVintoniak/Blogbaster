@@ -22,6 +22,7 @@
                 if ($(window).data('ajaxready') === false)
                     return;
                 if (enablePagin) {
+                    SpinnerHelper.showSpinner();
                     $(window).data('ajaxready', false);
                     $.ajax({
                         url: '@Url.Action("Articles", "Articles")',
@@ -31,7 +32,8 @@
                         },
                         dataType: "html",
                         type: "Get",
-                        success: function(data) {
+                        success: function (data) {
+                            SpinnerHelper.hideSpinner();
                             pageNum++;
                             $(".articles-container").append(data);
 

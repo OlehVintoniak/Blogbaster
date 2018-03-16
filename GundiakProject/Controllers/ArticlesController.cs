@@ -1,23 +1,19 @@
 ﻿#region
 
-using System;
-using System.Collections.Generic;
 using GundiakProject.DomainModels;
+using GundiakProject.Enums;
+using GundiakProject.Filters;
+using GundiakProject.Helpers;
 using GundiakProject.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Mime;
 using System.Threading.Tasks;
-using System.Web.Helpers;
 using System.Web.Mvc;
-using Antlr.Runtime;
-using GundiakProject.Enums;
-using GundiakProject.Filters;
-using GundiakProject.Helpers;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 #endregion
 
@@ -155,8 +151,8 @@ namespace GundiakProject.Controllers
 
             #region EmailNotification
             if(article != null)
-                await EmailHelper.SendEmail(article.ApplicationUser.Email, "Sorry!",
-                    $"Your article {article.Title} was deleted!");
+                await EmailHelper.SendEmail(article.ApplicationUser.Email, "Ой!",
+                    $"Ваша стаття '{article.Title}' була видалена!");
             #endregion
 
             db.Articles.Remove(article);
@@ -201,8 +197,8 @@ namespace GundiakProject.Controllers
 
             if (!article.WasPublished)
             {
-                await EmailHelper.SendEmail(article.ApplicationUser.Email, "Congratulation!",
-                    $"Your article {article.Title} was succesfuly published!");
+                await EmailHelper.SendEmail(article.ApplicationUser.Email, "Вітання!",
+                    $"Ваша стаття '{article.Title}' була успішно опублікована!");
             }
 
             #endregion
@@ -223,12 +219,12 @@ namespace GundiakProject.Controllers
 
                 article.Status = Status.Published;
                 article.DatePublished = DateTime.Now;
-                return "Published";
+                return "Оголошення опубліковано.";
             }
             else
             {
                 article.Status = Status.Created;
-                return "Created";
+                return "Оголошення знято з публікації.";
             }
         }
 

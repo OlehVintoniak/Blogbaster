@@ -5,7 +5,7 @@
     ViewBag.Title = "Оголошення";
 }
 @Html.Partial("_MenuPartial")
-<div class="jumbotron article">
+<div class="jumbotron article" style="overflow: auto">
     <table class="table">
         <tr>
             <th>
@@ -20,10 +20,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.DateCreated)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
             <th></th>
+            <th></th>
+            <th>
+            </th>
         </tr>
 
         @foreach (var article in Model)
@@ -37,24 +37,31 @@
                 </td>
                 <td>
                     @Html.Raw("<img style='width:50px; height:50px;' src=\"data:image/jpeg;base64,"
-                                   + Convert.ToBase64String(article.Image) + "\" />")
+                                                    + Convert.ToBase64String(article.Image) + "\" />")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => article.DateCreated)
                 </td>
                 <td>
-                    <span id="@article.Id"> "@article.Status" </span>
+                    @Html.ActionLink("Деталі", "Details", new { id = article.Id }, new { @class = "btn btn-primary" })
                 </td>
                 <td>
-                    @Html.ActionLink("Деталі", "Details", new { id = article.Id }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Видалити", "Delete", new { id = article.Id }, new { @class = "btn btn-danger" })
+                </td>
+                <td>
                     @if (article.Status == Status.Published)
                     {
-                        <input type="checkbox" class="publish" checked id="@article.Id" />
+                        <label class="container-c">
+                            <input type="checkbox" class="publish" checked id="@article.Id" />
+                            <span class="checkmark"></span>
+                        </label>
                     }
                     else
                     {
-                        <input type="checkbox" class="publish" id="@article.Id" />
+                        <label class="container-c">
+                            <input type="checkbox" class="publish" id="@article.Id" />
+                            <span class="checkmark"></span>
+                        </label>
                     }
                 </td>
             </tr>
@@ -69,8 +76,12 @@
                 Publish($(this).attr("id"));
             });
         });
-        
+
         function Publish(articleId) {
+            if ($(window).data('ajaxready') === false)
+                return;
+            SpinnerHelper.showSpinner();
+            $(window).data('ajaxready', false);
             $.ajax({
                 url: '@Url.Action("Publish", "Articles")',
                 type: "POST",
@@ -79,7 +90,8 @@
                 },
                 dataType: 'html',
                 success: function (data) {
-                    $("#" + articleId).text(data);
+                    SpinnerHelper.hideSpinner();
+                    $(window).data('ajaxready', true);
                 }
             });
         }
