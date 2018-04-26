@@ -47,11 +47,6 @@ namespace Blogbaster.Models
                 .HasRequired(a => a.ApplicationUser)
                 .WithMany(u => u.Articles);
 
-            //modelBuilder.Entity<ApplicationUser>()
-            //    .HasMany(u => u.Articles)
-            //    .WithRequired(a => a.ApplicationUser)
-            //    .HasForeignKey(d => d.ApplicationUserId);
-
             base.OnModelCreating(modelBuilder);
         }
     }
