@@ -1,4 +1,4 @@
-﻿namespace Blogbaster.Enums
+﻿namespace Blogbaster.Core.Data.Enums
 {
     public enum Status
     {

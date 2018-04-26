@@ -1,12 +1,13 @@
-using System.Data.Entity.Migrations;
-using System.Linq;
-using Blogbaster.Models;
+using Blogbaster.Core.Data.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Blogbaster.Migrations
+namespace Blogbaster.Core.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<Blogbaster.Core.ApplicationDbContext>
     {
         public Configuration()
         {
@@ -15,8 +16,6 @@ namespace Blogbaster.Migrations
 
         protected override void Seed(ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 

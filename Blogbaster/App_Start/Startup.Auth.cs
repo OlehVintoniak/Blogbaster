@@ -1,10 +1,11 @@
-﻿using System;
-using Blogbaster.Models;
+﻿using Blogbaster.Core;
+using Blogbaster.Core.Data.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using System;
 
 namespace Blogbaster
 {

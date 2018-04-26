@@ -1,11 +1,10 @@
-﻿using Blogbaster.DomainModels.Abstract;
-using Blogbaster.Models;
+﻿using Blogbaster.Core.Data.Entities.Abstract;
+using Blogbaster.Core.Data.Enums;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Blogbaster.Enums;
 
-namespace Blogbaster.DomainModels
+namespace Blogbaster.Core.Data.Entities
 {
     public class Article : BaseEntity<int>
     {

@@ -1,10 +1,10 @@
 ﻿#region
 
-using Blogbaster.DomainModels;
-using Blogbaster.Enums;
+using Blogbaster.Core;
+using Blogbaster.Core.Data.Entities;
+using Blogbaster.Core.Data.Enums;
 using Blogbaster.Filters;
 using Blogbaster.Helpers;
-using Blogbaster.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;

@@ -1,6 +1,6 @@
 ﻿#region
 
-using Blogbaster.Models;
+using Blogbaster.Core;
 using System.Web.Mvc;
 
 #endregion

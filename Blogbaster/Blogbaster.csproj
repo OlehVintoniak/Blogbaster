@@ -204,22 +204,13 @@
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="DomainModels\Abstract\BaseEntity.cs" />
-    <Compile Include="DomainModels\Article.cs" />
-    <Compile Include="Enums\Status.cs" />
     <Compile Include="Filters\OnlyForAdminAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
-    <Compile Include="Migrations\201803041034489_initial.cs" />
-    <Compile Include="Migrations\201803041034489_initial.Designer.cs">
-      <DependentUpon>201803041034489_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -333,9 +324,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803041034489_initial.resx">
-      <DependentUpon>201803041034489_initial.cs</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Blogbaster.Core\Blogbaster.Core.csproj">
+      <Project>{9825b9d9-e712-4c3f-9388-6bb7700a3774}</Project>
+      <Name>Blogbaster.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

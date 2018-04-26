@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Blogbaster.DomainModels.Abstract
+namespace Blogbaster.Core.Data.Entities.Abstract
 {
     public abstract class BaseEntity<T>
     {
