@@ -9,6 +9,7 @@ namespace Blogbaster
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            AutoFacConfig.RegisteModules();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

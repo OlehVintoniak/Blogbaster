@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Blogbaster.Core.Services.Abstract
 {
@@ -45,9 +46,11 @@ namespace Blogbaster.Core.Services.Abstract
             return DbSet.Find(id);
         }
 
-        public virtual TEntity Add(TEntity entity)
+        public virtual async Task<TEntity> Add(TEntity entity)
         {
-            return DbSet.Add(entity);
+            var addedEntity = DbSet.Add(entity);
+            await Context.SaveChangesAsync();
+            return addedEntity;
         }
 
         public virtual void Update(TEntity entity)
@@ -55,19 +58,21 @@ namespace Blogbaster.Core.Services.Abstract
             Context.Entry(entity).State = EntityState.Modified;
         }
 
-        public virtual TEntity Delete(TEntity entity)
+        public virtual async Task<TEntity> Delete(TEntity entity)
         {
             if (Context.Entry(entity).State == EntityState.Detached)
             {
                 DbSet.Attach(entity);
             }
-            return DbSet.Remove(entity);
+            var deletedEntity = DbSet.Remove(entity);
+            await Context.SaveChangesAsync();
+            return deletedEntity;
         }
 
-        public virtual TEntity DeleteById(object id)
+        public virtual async Task<TEntity> DeleteById(object id)
         {
             TEntity entityToDelete = DbSet.Find(id);
-            return Delete(entityToDelete);
+            return await Delete(entityToDelete);
         }
 
         #region IDisposable

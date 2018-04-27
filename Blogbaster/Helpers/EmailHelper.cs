@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blogbaster.Helpers
 {
+    // This helper does not using now
     public static class EmailHelper
     {
         public static async Task SendEmail(string toAddress, string subject, string body)
@@ -20,7 +21,7 @@ namespace Blogbaster.Helpers
             };
             var mail = new MailMessage();
 
-            mail.From = new MailAddress(senderEmail, "Article For Every One.");
+            mail.From = new MailAddress(senderEmail, "Blogbaster.");
             mail.To.Add(new MailAddress(toAddress));
             mail.CC.Add(new MailAddress(senderEmail));
             mail.IsBodyHtml = true;

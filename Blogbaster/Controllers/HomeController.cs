@@ -1,15 +1,9 @@
-﻿#region
-
-using Blogbaster.Core;
-using System.Web.Mvc;
-
-#endregion
+﻿using System.Web.Mvc;
 
 namespace Blogbaster.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
             return View("Landing");
@@ -17,15 +11,11 @@ namespace Blogbaster.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 

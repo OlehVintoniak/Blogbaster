@@ -1,14 +1,11 @@
 ﻿#region
 
-using Blogbaster.Core;
 using Blogbaster.Core.Data.Entities;
-using Blogbaster.Core.Data.Enums;
+using Blogbaster.Core.Services.Interfaces;
 using Blogbaster.Filters;
 using Blogbaster.Helpers;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -21,21 +18,20 @@ namespace Blogbaster.Controllers
 {
     public class ArticlesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IPostService _postService;
 
-        public ArticlesController()
+        public ArticlesController(IPostService postService)
         {
-            _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            _postService = postService;
         }
 
         #region Get
         // GET: Articles
         [OnlyForAdmin]
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var articles = db.Articles.Include(a => a.ApplicationUser);
-            return View(await articles.ToListAsync());
+            var articles = _postService.GetAll().ToList();
+            return View(articles);
         }
 
         // GET: Articles/Details/5
@@ -44,7 +40,7 @@ namespace Blogbaster.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Article article = await db.Articles.FindAsync(id);
+            Article article = _postService.FindById(id);
 
             if (article == null)
                 return HttpNotFound();
@@ -85,8 +81,7 @@ namespace Blogbaster.Controllers
                 }
                 #endregion
 
-                db.Articles.Add(article);
-                await db.SaveChangesAsync();
+                await _postService.Add(article);
                 return RedirectToRoute(new {controller="Articles", action="ArticlesPage" });
             }
             return View("CreateArticle",article);
@@ -127,13 +122,13 @@ namespace Blogbaster.Controllers
         #region Delete
         // GET: Articles/Delete/5
         [OnlyForAdmin]
-        public async Task<ActionResult> Delete(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = await db.Articles.FindAsync(id);
+            var article = _postService.FindById(id);
             if (article == null)
             {
                 return HttpNotFound();
@@ -147,16 +142,7 @@ namespace Blogbaster.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Article article = await db.Articles.FindAsync(id);
-
-            #region EmailNotification
-            if(article != null)
-                await EmailHelper.SendEmail(article.ApplicationUser.Email, "Ой!",
-                    $"Ваша стаття '{article.Title}' була видалена!");
-            #endregion
-
-            db.Articles.Remove(article);
-            await db.SaveChangesAsync();
+            await _postService.DeleteById(id);
             return RedirectToAction("Index");
         }
         #endregion
@@ -168,74 +154,27 @@ namespace Blogbaster.Controllers
 
         public ActionResult Articles(int pageIndex, int pageSize)
         {
-            var articles = db.Articles
-                .Where(a => a.Status == Status.Published)
-                .OrderByDescending(a => a.DatePublished).AsQueryable()
-                .Skip(pageIndex * pageSize)
-                .Take(pageSize)
-                .ToList();
-
+            var articles = _postService.GetPaginated(pageIndex, pageSize).ToList();
             return PartialView("_ArticlesList", articles);
         }
+
         public JsonResult ActiclesCount()
         {
-            var count = db.Articles.Count(a => a.Status == Status.Published);
-            return Json(count, JsonRequestBehavior.AllowGet);
+            return Json(_postService.PublishedPostsCount(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [OnlyForAdmin]
         public async Task<JsonResult> Publish(int articleId)
         {
-            var article = await db.Articles.FirstOrDefaultAsync(a => a.Id == articleId);
+            var article = _postService.FindById(articleId);
             if (article == null)
             {
                 return Json("article not found");
             }
 
-            #region EmailNotification
-
-            if (!article.WasPublished)
-            {
-                await EmailHelper.SendEmail(article.ApplicationUser.Email, "Вітання!",
-                    $"Ваша стаття '{article.Title}' була успішно опублікована!");
-            }
-
-            #endregion
-
-            var result = ChangeStatus(ref article);
-            await db.SaveChangesAsync();
-
-            return Json(result);
+            await _postService.ChangeStatus(article);
+            return Json("Done");
         }
-
-        #region Helpers
-        private string ChangeStatus(ref Article article)
-        {
-            if (article.Status == Status.Created)
-            {
-                if (!article.WasPublished)
-                    article.WasPublished = true;
-
-                article.Status = Status.Published;
-                article.DatePublished = DateTime.Now;
-                return "Оголошення опубліковано.";
-            }
-            else
-            {
-                article.Status = Status.Created;
-                return "Оголошення знято з публікації.";
-            }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-        #endregion
     }
 }
