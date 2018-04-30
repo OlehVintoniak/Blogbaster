@@ -10,19 +10,19 @@
                 <img src="~/Content/Images/General/logo.png" style="width: 30px; height: 30px; margin-top: -40px; margin-right: 10px" />
             </a>
             <div style="display: inline-block">
-                @Html.ActionLink("Article For Every One", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Blogbaster", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Оголошення", "ArticlesPage", "Articles")</li>
+                <li>@Html.ActionLink("Оголошення", "PostsPage", "Posts")</li>
                 @if (Request.IsAuthenticated)
                 {
-                    <li>@Html.ActionLink("Створити нове", "Create", "Articles")</li>
+                    <li>@Html.ActionLink("Створити нове", "Create", "Posts")</li>
                 }
                 @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                 {
-                    <li>@Html.ActionLink("Адміністрування", "Index", "Articles")</li>
+                    <li>@Html.ActionLink("Адміністрування", "Index", "Posts")</li>
                 }
                 <li>@Html.ActionLink("Про нас", "About", "Home")</li>
             </ul>

@@ -12,7 +12,7 @@ namespace Blogbaster.Core
         }
 
 
-        public DbSet<Article> Articles { get; set; }
+        public DbSet<Post> Posts { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -21,9 +21,9 @@ namespace Blogbaster.Core
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Article>()
+            modelBuilder.Entity<Post>()
                 .HasRequired(a => a.ApplicationUser)
-                .WithMany(u => u.Articles);
+                .WithMany(u => u.Posts);
 
             base.OnModelCreating(modelBuilder);
         }

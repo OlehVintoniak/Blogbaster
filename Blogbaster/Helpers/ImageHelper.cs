@@ -5,9 +5,9 @@ namespace Blogbaster.Helpers
 {
     public static class ImageHelper
     {
-        public static byte[] GetDefaultArticleImage()
+        public static byte[] GetDefaultPostImage()
         {
-            return File.ReadAllBytes(HttpContext.Current.Server.MapPath(Constants.DefaultArticleImageUrl));
+            return File.ReadAllBytes(HttpContext.Current.Server.MapPath(Constants.DefaultPostImageUrl));
         }
     }
 }

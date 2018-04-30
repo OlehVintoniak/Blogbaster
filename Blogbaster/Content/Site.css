@@ -29,18 +29,18 @@ textarea {
     max-width: 280px;
 }
 
-.article {
+.post {
     opacity: 0.93;
     box-shadow: 5px 5px 10px #888888;
     margin-top: 40px;
     overflow-x: hidden;
 }
 
-.hovered-article:hover {
+.hovered-post:hover {
     box-shadow: 5px 10px 18px #888888;
 }
 
-hr .articlehr {
+hr .posthr {
     height: 2px;
     color: black;
 }

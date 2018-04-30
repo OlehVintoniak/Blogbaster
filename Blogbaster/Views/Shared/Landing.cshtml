@@ -19,13 +19,13 @@
             <div class="content">
                 @if (Request.IsAuthenticated)
                 {
-                    <p>@Html.ActionLink("Створити оголошення", "Create", "Articles", null, new { @class = "button1 temp" })</p>
+                    <p>@Html.ActionLink("Створити оголошення", "Create", "Posts", null, new { @class = "button1 temp" })</p>
                 }
                 else
                 {
                     <p>@Html.ActionLink("Створити оголошення", "Login", "Account", null, new { @class = "button1 temp" })</p>
                 }
-                <p>@Html.ActionLink("Переглянути оголошення", "ArticlesPage", "Articles", null, new { @class = "button1" })</p>
+                <p>@Html.ActionLink("Переглянути оголошення", "PostsPage", "Posts", null, new { @class = "button1" })</p>
                 @if (!Request.IsAuthenticated)
                 {
                     <p>@Html.ActionLink("Ввійти", "Login", "Account", null, new { @class = "button1 temp2" })</p>

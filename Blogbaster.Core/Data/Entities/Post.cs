@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blogbaster.Core.Data.Entities
 {
-    public class Article : Entity<int>
+    public class Post : Entity<int>
     {
         [Required]
         [DisplayName("Заголовок")]

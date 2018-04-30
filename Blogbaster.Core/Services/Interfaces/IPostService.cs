@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Blogbaster.Core.Services.Interfaces
 {
-    public interface IPostService : IBaseService<Article>
+    public interface IPostService : IBaseService<Post>
     {
-        IEnumerable<Article> GetPaginated(int pageIndex, int pageSize);
+        IEnumerable<Post> GetPaginated(int pageIndex, int pageSize);
         int PublishedPostsCount();
-        Task ChangeStatus(Article post);
+        Task ChangeStatus(Post post);
     }
 }

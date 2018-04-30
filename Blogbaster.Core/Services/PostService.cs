@@ -9,14 +9,14 @@ using Blogbaster.Core.Services.Interfaces;
 
 namespace Blogbaster.Core.Services
 {
-    public class PostService : BaseService<Article>, IPostService
+    public class PostService : BaseService<Post>, IPostService
     {
         public PostService(ApplicationDbContext context)
             : base(context) { }
 
-        public IEnumerable<Article> GetPaginated(int pageIndex, int pageSize)
+        public IEnumerable<Post> GetPaginated(int pageIndex, int pageSize)
         {
-            return Context.Articles
+            return Context.Posts
                 .Where(a => a.Status == Status.Published)
                 .OrderByDescending(a => a.DatePublished).AsQueryable()
                 .Skip(pageIndex * pageSize)
@@ -25,10 +25,10 @@ namespace Blogbaster.Core.Services
 
         public int PublishedPostsCount()
         {
-            return Context.Articles.Count(a => a.Status == Status.Published);
+            return Context.Posts.Count(a => a.Status == Status.Published);
         }
 
-        public async Task ChangeStatus(Article post)
+        public async Task ChangeStatus(Post post)
         {
             if (post.Status == Status.Created)
             {

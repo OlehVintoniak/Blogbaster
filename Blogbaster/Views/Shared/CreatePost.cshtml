@@ -1,4 +1,4 @@
-﻿@model Blogbaster.Core.Data.Entities.Article
+﻿@model Blogbaster.Core.Data.Entities.Post
 @{
     Layout = null;
 }
@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width" />
     <title>Нове оголошення</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/CreateArticle.css" rel="stylesheet" />
+    <link href="~/Content/CreatePost.css" rel="stylesheet" />
 </head>
 <body>
 @Html.Partial("_MenuPartial");
 <div class="main">
     <div class="content">
-        @using (Html.BeginForm("Create", "Articles", FormMethod.Post, new {enctype = "multipart/form-data"}))
+        @using (Html.BeginForm("Create", "Posts", FormMethod.Post, new {enctype = "multipart/form-data"}))
         {
             @Html.AntiForgeryToken()
 

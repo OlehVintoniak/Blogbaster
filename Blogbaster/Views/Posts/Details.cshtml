@@ -1,5 +1,5 @@
 ﻿@using Blogbaster.Core.Data.Enums
-@model Blogbaster.Core.Data.Entities.Article
+@model Blogbaster.Core.Data.Entities.Post
 
 @{
     ViewBag.Title = Model.Title;
@@ -9,26 +9,26 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 hidden-sm hidden-xs">
-            <div class="jumbotron article" style="padding: 10px">
+            <div class="jumbotron post" style="padding: 10px">
                 @Html.Raw("<img style='width:230px; height:230px; margin-left: 2px;' src=\"data:image/jpeg;base64,"
                           + Convert.ToBase64String(Model.Image) + "\" />")
             </div>
-            @if (Model.ApplicationUser.Articles.Where(a => a.Status == Status.Published && a.Id != Model.Id).ToList().Count > 0)
+            @if (Model.ApplicationUser.Posts.Where(a => a.Status == Status.Published && a.Id != Model.Id).ToList().Count > 0)
             {
-                <div class="jumbotron article" style="padding: 10px">
+                <div class="jumbotron post" style="padding: 10px">
                 
                     <p class="text-center">Інші роботи автора : </p>
                     <ul>
-                        @foreach (var article in Model.ApplicationUser.Articles.Where(a => a.Status == Status.Published && a.Id != Model.Id))
+                        @foreach (var post in Model.ApplicationUser.Posts.Where(a => a.Status == Status.Published && a.Id != Model.Id))
                         {
                             <li>
-                                @if (article.Title.Length > 12)
+                                @if (post.Title.Length > 12)
                                 {
-                                    @Html.ActionLink(article.Title.Substring(0, 12) + "...", "Details", "Articles", new {id = article.Id}, new {@class = "btn-link"})
+                                    @Html.ActionLink(post.Title.Substring(0, 12) + "...", "Details", "Posts", new {id = post.Id}, new {@class = "btn-link"})
                                 }
                                 else
                                 {
-                                    @Html.ActionLink(article.Title, "Details", "Articles", new {id = article.Id}, new {@class = "btn-link"})
+                                    @Html.ActionLink(post.Title, "Details", "Posts", new {id = post.Id}, new {@class = "btn-link"})
                                 }
                             </li>
                         }
@@ -37,10 +37,10 @@
             }
         </div>
         <div class="col-md-9">
-            <div class="jumbotron article">
+            <div class="jumbotron post">
                 <h2 style="margin-top: 0;">@Model.Title</h2>
                 <p class="lead">Автор - @Model.ApplicationUser.UserName</p>
-                <hr class="articlehr" />
+                <hr class="posthr" />
                 <p class="lead">@Model.Text</p>
             </div>
         </div>

@@ -16,54 +16,54 @@ using System.Web.Mvc;
 
 namespace Blogbaster.Controllers
 {
-    public class ArticlesController : Controller
+    public class PostsController : Controller
     {
         private readonly IPostService _postService;
 
-        public ArticlesController(IPostService postService)
+        public PostsController(IPostService postService)
         {
             _postService = postService;
         }
 
         #region Get
-        // GET: Articles
+        // GET: Posts
         [OnlyForAdmin]
         public ActionResult Index()
         {
-            var articles = _postService.GetAll().ToList();
-            return View(articles);
+            var posts = _postService.GetAll().ToList();
+            return View(posts);
         }
 
-        // GET: Articles/Details/5
+        // GET: Posts/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Article article = _postService.FindById(id);
+            Post post = _postService.FindById(id);
 
-            if (article == null)
+            if (post == null)
                 return HttpNotFound();
-            return View(article);
+            return View(post);
         }
         #endregion
 
         #region Create
-        // GET: Articles/Create
+        // GET: Posts/Create
         public ActionResult Create()
         {
-            return View("CreateArticle");
+            return View("CreatePost");
         }
 
-        // POST: Articles/Create
+        // POST: Posts/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Article article)
+        public async Task<ActionResult> Create(Post post)
         {
             if (ModelState.IsValid)
             {
-                article.DateCreated = DateTime.Now;
-                article.ApplicationUserId = User.Identity.GetUserId();
+                post.DateCreated = DateTime.Now;
+                post.ApplicationUserId = User.Identity.GetUserId();
 
                 #region SetImage
                 if (Request.Files[0] != null)
@@ -73,54 +73,54 @@ namespace Blogbaster.Controllers
                     {
                         imageData = binaryReader.ReadBytes(Request.Files[0].ContentLength);
                     }
-                    article.Image = imageData;
+                    post.Image = imageData;
                 }
-                if (article.Image.Length == 0)
+                if (post.Image.Length == 0)
                 {
-                    article.Image = ImageHelper.GetDefaultArticleImage();
+                    post.Image = ImageHelper.GetDefaultPostImage();
                 }
                 #endregion
 
-                await _postService.Add(article);
-                return RedirectToRoute(new {controller="Articles", action="ArticlesPage" });
+                await _postService.Add(post);
+                return RedirectToRoute(new {controller="Posts", action="PostsPage" });
             }
-            return View("CreateArticle",article);
+            return View("CreatePost",post);
         }
         #endregion
 
         #region Update (not implemented)
-        //// GET: Articles/Edit/5
+        //// GET: Posts/Edit/5
         //public async Task<ActionResult> Edit(int? id)
         //{
         //    if (id == null)
         //    {
         //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         //    }
-        //    Article article = await db.Articles.FindAsync(id);
-        //    if (article == null)
+        //    Post post = await db.Posts.FindAsync(id);
+        //    if (post == null)
         //    {
         //        return HttpNotFound();
         //    }
-        //    return View(article);
+        //    return View(post);
         //}
 
-        //// POST: Articles/Edit/5
+        //// POST: Posts/Edit/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Text,Status,ApplicationUserId")] Article article)
+        //public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Text,Status,ApplicationUserId")] Post post)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        db.Entry(article).State = EntityState.Modified;
+        //        db.Entry(post).State = EntityState.Modified;
         //        await db.SaveChangesAsync();
         //        return RedirectToAction("Index");
         //    }
-        //    return View(article);
+        //    return View(post);
         //}
         #endregion
 
         #region Delete
-        // GET: Articles/Delete/5
+        // GET: Posts/Delete/5
         [OnlyForAdmin]
         public ActionResult Delete(int? id)
         {
@@ -128,15 +128,15 @@ namespace Blogbaster.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var article = _postService.FindById(id);
-            if (article == null)
+            var post = _postService.FindById(id);
+            if (post == null)
             {
                 return HttpNotFound();
             }
-            return View(article);
+            return View(post);
         }
 
-        // POST: Articles/Delete/5
+        // POST: Posts/Delete/5
         [OnlyForAdmin]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -147,33 +147,33 @@ namespace Blogbaster.Controllers
         }
         #endregion
 
-        public ActionResult ArticlesPage()
+        public ActionResult PostsPage()
         {
             return View();
         }
 
-        public ActionResult Articles(int pageIndex, int pageSize)
+        public ActionResult Posts(int pageIndex, int pageSize)
         {
-            var articles = _postService.GetPaginated(pageIndex, pageSize).ToList();
-            return PartialView("_ArticlesList", articles);
+            var posts = _postService.GetPaginated(pageIndex, pageSize).ToList();
+            return PartialView("_PostsList", posts);
         }
 
-        public JsonResult ActiclesCount()
+        public JsonResult PostsCount()
         {
             return Json(_postService.PublishedPostsCount(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [OnlyForAdmin]
-        public async Task<JsonResult> Publish(int articleId)
+        public async Task<JsonResult> Publish(int postId)
         {
-            var article = _postService.FindById(articleId);
-            if (article == null)
+            var post = _postService.FindById(postId);
+            if (post == null)
             {
-                return Json("article not found");
+                return Json("post not found");
             }
 
-            await _postService.ChangeStatus(article);
+            await _postService.ChangeStatus(post);
             return Json("Done");
         }
     }

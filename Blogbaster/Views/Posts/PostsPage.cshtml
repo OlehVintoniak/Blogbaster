@@ -2,7 +2,7 @@
     ViewBag.Title = "Оголошення";
 }
 @Html.Partial("_MenuPartial")
-<div class="articles-container">
+<div class="posts-container">
 
 </div>
 
@@ -12,20 +12,20 @@
 
             var pageNum = 0;
             var enablePagin = true;
-            var allArticlesCount = 0;
-            var pageSize = parseInt("@Constants.ArticlesPageSize");
+            var allPostsCount = 0;
+            var pageSize = parseInt("@Constants.PostsPageSize");
 
-            articlesCount();
-            articlePagination();
+            postsCount();
+            postsPagination();
 
-            function articlePagination() {
+            function postsPagination() {
                 if ($(window).data('ajaxready') === false)
                     return;
                 if (enablePagin) {
                     SpinnerHelper.showSpinner();
                     $(window).data('ajaxready', false);
                     $.ajax({
-                        url: '@Url.Action("Articles", "Articles")',
+                        url: '@Url.Action("Posts", "Posts")',
                         data: {
                             pageIndex: pageNum,
                             pageSize: pageSize
@@ -35,32 +35,32 @@
                         success: function (data) {
                             SpinnerHelper.hideSpinner();
                             pageNum++;
-                            $(".articles-container").append(data);
+                            $(".posts-container").append(data);
 
-                            var afterLoad = $(".articles-container div[data-append='true']").length;
-                            if (afterLoad == allArticlesCount) {
+                            var afterLoad = $(".posts-container div[data-append='true']").length;
+                            if (afterLoad == allPostsCount) {
                                 enablePagin = false;
                             };
 
                             $(window).data('ajaxready', true);
                             if ($(window).height() >
-                                $(".articles-container").height() + $(".articles-container").offset().top) {
-                                articlePagination();
+                                $(".posts-container").height() + $(".posts-container").offset().top) {
+                                postsPagination();
                             }
                         }
                     });
                 }
             }
 
-            function articlesCount() {
+            function postsCount() {
                 if ($(window).data('ajaxready') === false)
                     return;
                 $.ajax({
-                    url: '@Url.Action("ActiclesCount", "Articles")',
+                    url: '@Url.Action("PostsCount", "Posts")',
                     dataType: "html",
                     type: "Get",
                     success: function(data) {
-                        allArticlesCount = data;
+                        allPostsCount = data;
                         $(window).data('ajaxready', true);
                     }
                 });
@@ -69,7 +69,7 @@
             $(window).on("scroll",
                 function() {
                     delay(function() {
-                            articlePagination();
+                            postsPagination();
                         },
                         90);
                 });

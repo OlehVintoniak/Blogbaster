@@ -11,10 +11,10 @@ namespace Blogbaster.Core.Data.Entities
     {
         public ApplicationUser()
         {
-            Articles = new List<Article>();
+            Posts = new List<Post>();
         }
 
-        public virtual ICollection<Article> Articles { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
