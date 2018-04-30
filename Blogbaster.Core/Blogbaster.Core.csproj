@@ -74,6 +74,7 @@
     <Compile Include="Data\Entities\Abstract\BaseEntity.cs" />
     <Compile Include="Data\Entities\Abstract\IEntity.cs" />
     <Compile Include="Data\Entities\ApplicationUser.cs" />
+    <Compile Include="Data\Entities\Category.cs" />
     <Compile Include="Data\Entities\Post.cs" />
     <Compile Include="Data\Enums\Status.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -81,7 +82,9 @@
     <Compile Include="Services\Abstract\BaseService.cs" />
     <Compile Include="Services\Abstract\IBaseService.cs" />
     <Compile Include="Services\ApplicationUserService.cs" />
+    <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\Interfaces\IApplicationUserService.cs" />
+    <Compile Include="Services\Interfaces\ICategoryService.cs" />
     <Compile Include="Services\Interfaces\IPostService.cs" />
     <Compile Include="Services\PostService.cs" />
   </ItemGroup>

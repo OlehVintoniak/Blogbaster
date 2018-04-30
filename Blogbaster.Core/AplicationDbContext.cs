@@ -13,6 +13,7 @@ namespace Blogbaster.Core
 
 
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -24,6 +25,12 @@ namespace Blogbaster.Core
             modelBuilder.Entity<Post>()
                 .HasRequired(a => a.ApplicationUser)
                 .WithMany(u => u.Posts);
+
+            modelBuilder.Entity<Post>()
+                .HasRequired(p => p.Category)
+                .WithMany(c => c.Posts)
+                .HasForeignKey(p => p.CategoryId)
+                .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);
         }

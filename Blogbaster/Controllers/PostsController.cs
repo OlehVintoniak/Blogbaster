@@ -19,10 +19,12 @@ namespace Blogbaster.Controllers
     public class PostsController : Controller
     {
         private readonly IPostService _postService;
+        private readonly ICategoryService _categoryService;
 
-        public PostsController(IPostService postService)
+        public PostsController(IPostService postService, ICategoryService categoryService)
         {
             _postService = postService;
+            _categoryService = categoryService;
         }
 
         #region Get
@@ -52,6 +54,7 @@ namespace Blogbaster.Controllers
         // GET: Posts/Create
         public ActionResult Create()
         {
+            ViewBag.CategoryId = new SelectList(_categoryService.GetAll(), "Id", "Name");
             return View("CreatePost");
         }
 
@@ -84,6 +87,8 @@ namespace Blogbaster.Controllers
                 await _postService.Add(post);
                 return RedirectToRoute(new {controller="Posts", action="PostsPage" });
             }
+
+            ViewBag.CategoryId = new SelectList(_categoryService.GetAll(), "Id", "Name", post.CategoryId);
             return View("CreatePost",post);
         }
         #endregion
