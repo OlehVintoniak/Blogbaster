@@ -20,11 +20,14 @@ namespace Blogbaster.Controllers
     {
         private readonly IPostService _postService;
         private readonly ICategoryService _categoryService;
-
-        public PostsController(IPostService postService, ICategoryService categoryService)
+        private readonly IApplicationUserService _userService;
+        public PostsController(IPostService postService,
+            ICategoryService categoryService,
+            IApplicationUserService userService)
         {
             _postService = postService;
             _categoryService = categoryService;
+            _userService = userService;
         }
 
         #region Get
@@ -157,15 +160,22 @@ namespace Blogbaster.Controllers
             return View();
         }
 
-        public ActionResult Posts(int pageIndex, int pageSize)
+        public ActionResult UserPostsPage(string userId)
         {
-            var posts = _postService.GetPaginated(pageIndex, pageSize).ToList();
+            var user = _userService.FindById(userId);
+
+            return View("UserPage", user);
+        }
+
+        public ActionResult Posts(int pageIndex, int pageSize, string userId = null)
+        {
+            var posts = _postService.GetPaginated(pageIndex, pageSize, userId).ToList();
             return PartialView("_PostsList", posts);
         }
 
-        public JsonResult PostsCount()
+        public JsonResult PostsCount(string userId = null)
         {
-            return Json(_postService.PublishedPostsCount(), JsonRequestBehavior.AllowGet);
+            return Json(_postService.PublishedPostsCount(userId), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

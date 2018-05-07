@@ -10,8 +10,7 @@ namespace Blogbaster.Core
         {
             builder.RegisterType(typeof(ApplicationDbContext)).As(typeof(ApplicationDbContext)).InstancePerLifetimeScope();
 
-            var dataAssembly = Assembly.GetExecutingAssembly();
-            builder.RegisterAssemblyTypes(dataAssembly)
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces()
                 .InstancePerRequest();

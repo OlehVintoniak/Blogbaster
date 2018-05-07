@@ -7,8 +7,8 @@ namespace Blogbaster.Core.Services.Interfaces
 {
     public interface IPostService : IBaseService<Post>
     {
-        IEnumerable<Post> GetPaginated(int pageIndex, int pageSize);
-        int PublishedPostsCount();
+        IEnumerable<Post> GetPaginated(int pageIndex, int pageSize, string userId = null);
+        int PublishedPostsCount(string userId = null);
         Task ChangeStatus(Post post);
     }
 }

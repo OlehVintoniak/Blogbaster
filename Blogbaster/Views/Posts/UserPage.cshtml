@@ -1,0 +1,91 @@
+﻿@model Blogbaster.Core.Data.Entities.ApplicationUser
+@{
+    ViewBag.Title = "UserPosts";
+}
+
+@Html.Partial("_MenuPartial")
+
+<div class="row" style="padding-top: 3%">
+    <div class="col-md-3">
+        <div class="jumbotron post" style="padding: 10px">
+            <span>@Model.Email</span>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="posts-container">
+
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function() {
+
+            var pageNum = 0;
+            var enablePagin = true;
+            var allPostsCount = 0;
+            var pageSize = parseInt("@Constants.PostsPageSize");
+
+            postsCount();
+            postsPagination();
+
+            function postsPagination() {
+                if ($(window).data('ajaxready') === false)
+                    return;
+                if (enablePagin) {
+                    SpinnerHelper.showSpinner();
+                    $(window).data('ajaxready', false);
+                    $.ajax({
+                        url: '@Url.Action("Posts", "Posts", new { userId = Model.Id })',
+                        data: {
+                            pageIndex: pageNum,
+                            pageSize: pageSize
+                        },
+                        dataType: "html",
+                        type: "Get",
+                        success: function (data) {
+                            SpinnerHelper.hideSpinner();
+                            pageNum++;
+                            $(".posts-container").append(data);
+
+                            var afterLoad = $(".posts-container div[data-append='true']").length;
+                            if (afterLoad == allPostsCount) {
+                                enablePagin = false;
+                            };
+
+                            $(window).data('ajaxready', true);
+                            if ($(window).height() >
+                                $(".posts-container").height() + $(".posts-container").offset().top) {
+                                postsPagination();
+                            }
+                        }
+                    });
+                }
+            }
+
+            function postsCount() {
+                if ($(window).data('ajaxready') === false)
+                    return;
+                $.ajax({
+                    url: '@Url.Action("PostsCount", "Posts", new { userId = Model.Id })',
+                    dataType: "html",
+                    type: "Get",
+                    success: function(data) {
+                        allPostsCount = data;
+                        $(window).data('ajaxready', true);
+                    }
+                });
+            }
+
+            $(window).on("scroll",
+                function() {
+                    delay(function() {
+                            postsPagination();
+                        },
+                        90);
+                });
+
+        });
+    </script>
+}
+
