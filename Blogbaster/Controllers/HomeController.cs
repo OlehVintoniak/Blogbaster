@@ -6,7 +6,7 @@ namespace Blogbaster.Controllers
     {
         public ActionResult Index()
         {
-            return View("Landing");
+            return RedirectToRoute(new { controller="Posts", action="PostsPage" });
         }
 
         public ActionResult About()

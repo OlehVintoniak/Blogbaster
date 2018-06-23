@@ -15,7 +15,6 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Оголошення", "PostsPage", "Posts")</li>
                 @if (Request.IsAuthenticated)
                 {
                     <li>@Html.ActionLink("Створити нове", "Create", "Posts")</li>
