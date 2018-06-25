@@ -3,31 +3,35 @@
 @{
     ViewBag.Title = "Index";
 }
+@Html.Partial("_MenuPartial")
+<div class="jumbotron">
+    @Html.ActionLink("Пости", "Index", "Posts", null, new { @class = "btn btn-primary" })
+</div>
+<div class="jumbotron">
+    <p>
+        @Html.ActionLink("Нова", "Create", null, new { @class = "btn btn-success" })
+    </p>
 
-<h2>Index</h2>
+    <table class="table">
+        <tr>
+            <th>
+                Категорії
+            </th>
+            <th></th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Редагувати", "Edit", new { id = item.Id }, new { @class="btn btn-primary" })
+                    @Html.ActionLink("Видалити", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+    </table>
+</div>

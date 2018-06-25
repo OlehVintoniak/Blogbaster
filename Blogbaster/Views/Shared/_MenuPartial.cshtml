@@ -17,7 +17,7 @@
             <ul class="nav navbar-nav">
                 @if (Request.IsAuthenticated)
                 {
-                    <li>@Html.ActionLink("Створити нове", "Create", "Posts")</li>
+                    <li>@Html.ActionLink("Створити пост", "Create", "Posts")</li>
                 }
                 @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                 {
