@@ -306,7 +306,6 @@
     <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\Posts\PostsPage.cshtml" />
     <Content Include="Views\Posts\_PostsList.cshtml" />
-    <Content Include="Views\Shared\Landing.cshtml" />
     <Content Include="Views\Shared\CreatePost.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Shared\Error403.cshtml" />
